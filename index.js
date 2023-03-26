@@ -1,9 +1,10 @@
-const apiKey = "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"
+//오픈ai api에서 apikey를 받은뒤 apiKey 변수에 넣어주시면 됩니다.
+const apiKey = "sk-"
 const serverless = require('serverless-http');
 const { Configuration, OpenAIApi } = require("openai");
 const express = require('express')
-var cors = require('cors')
-const app = express()
+const cors = require("cors");
+const app = express();
 
 const configuration = new Configuration({
     apiKey: apiKey,
@@ -11,9 +12,11 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 //CORS 이슈 해결
+//express로 cors 요청을 쉽게 받습니다. origin은 본인의 도메인 주소를 입력하셔야 합니다.
 let corsOptions = {
-    origin: 'https://fortunecat.pages.dev',
+    origin: "프론트도메인주소",
     credentials: true,
+    optionsSuccessStatus: 30000,
 }
 app.use(cors(corsOptions));
 
@@ -58,5 +61,3 @@ app.post('/fortuneTell', async function (req, res) {
 });
 
 module.exports.handler = serverless(app);
-
-// app.listen(3000)
